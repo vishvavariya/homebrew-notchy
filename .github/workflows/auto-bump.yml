@@ -1,0 +1,78 @@
+name: Auto-bump Notchy cask
+
+on:
+  schedule:
+    - cron: "0 * * * *" # hourly
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse latest version from appcast
+        id: parse
+        run: |
+          set -euo pipefail
+          curl -fsSL https://notchy.dev/appcast.xml -o appcast.xml
+
+          # Pull the first <sparkle:shortVersionString> — Sparkle places newest first.
+          LATEST_VERSION=$(grep -oE '<sparkle:shortVersionString>[^<]+' appcast.xml \
+            | head -n1 \
+            | sed 's|<sparkle:shortVersionString>||')
+
+          if [ -z "$LATEST_VERSION" ]; then
+            echo "Could not parse latest version from appcast" >&2
+            exit 1
+          fi
+
+          CURRENT_VERSION=$(grep -oE 'version "[^"]+"' Casks/notchy.rb \
+            | head -n1 \
+            | sed 's|version "||;s|"||')
+
+          echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          echo "current=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+
+          if [ "$LATEST_VERSION" = "$CURRENT_VERSION" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download zip and compute sha256
+        if: steps.parse.outputs.changed == 'true'
+        id: hash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.parse.outputs.latest }}"
+          URL="https://notchy.dev/Notchy-${VERSION}.zip"
+
+          curl -fsSL "$URL" -o "notchy.zip"
+          SHA=$(shasum -a 256 notchy.zip | awk '{print $1}')
+
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Update Casks/notchy.rb
+        if: steps.parse.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.parse.outputs.latest }}"
+          SHA="${{ steps.hash.outputs.sha }}"
+
+          sed -i -E "s|version \"[^\"]+\"|version \"${VERSION}\"|" Casks/notchy.rb
+          sed -i -E "s|sha256 \"[a-f0-9]{64}\"|sha256 \"${SHA}\"|" Casks/notchy.rb
+
+      - name: Commit and push
+        if: steps.parse.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Casks/notchy.rb
+          git commit -m "Bump Notchy to ${{ steps.parse.outputs.latest }}"
+          git push
