@@ -1,6 +1,6 @@
 cask "notchy" do
-  version "1.0.82"
-  sha256 "e504ee2cb5ea736133854fa8846d6a30b177cf90b383b1d4bce83cf54d9cecc1"
+  version "1.0.83"
+  sha256 "e45ee745f1836b43967e14a3d5b0f7b4c5908ac735da44638a3867da55a75030"
 
   url "https://notchy.dev/Notchy-#{version}.zip",
       verified: "notchy.dev/"
