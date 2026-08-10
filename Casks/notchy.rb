@@ -1,6 +1,6 @@
 cask "notchy" do
-  version "1.0.101"
-  sha256 "1b38dcb549761949e94183830a708d3f4035fd3f68738846cad62aa399d9010e"
+  version "1.0.102"
+  sha256 "baf4bd28222df5e074c3282d76202e5013041aa1885f283ef3b53b981ec9c2f0"
 
   url "https://notchy.dev/Notchy-#{version}.zip",
       verified: "notchy.dev/"
@@ -20,8 +20,13 @@ cask "notchy" do
 
   zap trash: [
     "~/Library/Application Support/Notchy",
-    "~/Library/Caches/dev.notchy.notchy",
-    "~/Library/Preferences/dev.notchy.notchy.plist",
-    "~/Library/Saved Application State/dev.notchy.notchy.savedState",
+    "~/Library/Application Support/dev.notchy.app",
+    "~/Library/Caches/dev.notchy.app",
+    "~/Library/Caches/dev.notchy.app.sparkle",
+    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.app",
+    "~/Library/HTTPStorages/dev.notchy.app",
+    "~/Library/Preferences/dev.notchy.app.plist",
+    "~/Library/Preferences/dev.notchy.usagecore.plist",
+    "~/Library/Saved Application State/dev.notchy.app.savedState",
   ]
 end
