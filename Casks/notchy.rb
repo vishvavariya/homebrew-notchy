@@ -2,8 +2,8 @@ cask "notchy" do
   version "1.0.111"
   sha256 "5277f6fa897345cf9e047af26d48dc06ec34319184df462e249a9ac64839ef47"
 
-  url "https://notchy.dev/Notchy-#{version}.zip",
-      verified: "notchy.dev/"
+  url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
+      verified: "github.com/vishvavariya/notchy-feedback/"
   name "Notchy"
   desc "Free Dynamic Island for the MacBook notch"
   homepage "https://notchy.dev/"
