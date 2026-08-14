@@ -1,6 +1,6 @@
 cask "notchy" do
-  version "1.0.114"
-  sha256 "fb27a06738f2bb81e05d97b742528fcc22b7fd486c1c34bf7d420fd52269259c"
+  version "1.0.115"
+  sha256 "b198d02a4fa87299c873fa93d2ee43ae1cd91ae77b92489b9b6baa816e24bc0a"
 
   url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
       verified: "github.com/vishvavariya/notchy-feedback/"
