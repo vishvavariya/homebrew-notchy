@@ -1,6 +1,6 @@
 cask "notchy" do
-  version "1.0.122"
-  sha256 "97c6b2ee082d7622d61d8daf1b491ed4e1a63d570ef1f5d136a4be7556aa6795"
+  version "1.0.123"
+  sha256 "9a8ca056323112a50cc0cb52b569b9b6a9c827f89c3d01254616724e04be5b5c"
 
   url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
       verified: "github.com/vishvavariya/notchy-feedback/"
@@ -18,15 +18,25 @@ cask "notchy" do
 
   app "Notchy.app"
 
+  # Keep in sync with UninstallManager.swift — the in-app "Uninstall Notchy"
+  # button and `brew uninstall --zap notchy` must leave the same machine behind.
+  # (The one thing brew cannot do is `tccutil reset`; permission records for a
+  # removed app are inert, and reinstalling re-prompts.)
   zap trash: [
     "~/Library/Application Support/Notchy",
     "~/Library/Application Support/dev.notchy.app",
     "~/Library/Caches/dev.notchy.app",
     "~/Library/Caches/dev.notchy.app.sparkle",
-    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.app",
+    "~/Library/Caches/dev.notchy.usagecore",
+    "~/Library/Containers/dev.notchy.app",
+    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.usagecore",
+    "~/Library/Group Containers/group.dev.notchy.usagecore",
     "~/Library/HTTPStorages/dev.notchy.app",
+    "~/Library/HTTPStorages/dev.notchy.app.binarycookies",
     "~/Library/Preferences/dev.notchy.app.plist",
     "~/Library/Preferences/dev.notchy.usagecore.plist",
     "~/Library/Saved Application State/dev.notchy.app.savedState",
+    "~/Library/WebKit/dev.notchy.app",
   ]
 end
+
