@@ -1,6 +1,6 @@
 cask "notchy" do
-  version "1.0.168"
-  sha256 "75c46c50480d84584bdaa9a9c6031ab7fad6bfa13f7260260636aa1e3859f96a"
+  version "1.0.169"
+  sha256 "a5c008af6769bbb96cb759e704b0c23e37991bf4e95f89260e836584f33e444e"
 
   url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
       verified: "github.com/vishvavariya/notchy-feedback/"
@@ -17,6 +17,15 @@ cask "notchy" do
   depends_on macos: ">= :ventura"
 
   app "Notchy.app"
+
+  # Charge Limit's root helper, installed only if the user enabled the feature.
+  # Booting the daemon out makes it restore normal charging before it exits.
+  uninstall launchctl: "dev.notchy.charge-helper",
+            delete:    [
+              "/Library/LaunchDaemons/dev.notchy.charge-helper.plist",
+              "/Library/PrivilegedHelperTools/dev.notchy.charge-helper",
+              "/Library/Application Support/Notchy/ChargeControl",
+            ]
 
   # Keep in sync with UninstallManager.swift — the in-app "Uninstall Notchy"
   # button and `brew uninstall --zap notchy` must leave the same machine behind.
@@ -37,6 +46,7 @@ cask "notchy" do
     "~/Library/Preferences/dev.notchy.usagecore.plist",
     "~/Library/Saved Application State/dev.notchy.app.savedState",
     "~/Library/WebKit/dev.notchy.app",
+    "/Users/Shared/Notchy",
   ]
 end
 
