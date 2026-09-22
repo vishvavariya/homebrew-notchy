@@ -2,8 +2,7 @@ cask "notchy" do
   version "1.0.171"
   sha256 "7852af3a704407cbe8fc69a8dffd64bb0150c125e430d1bdeba8ad25fec80804"
 
-  url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
-      verified: "github.com/vishvavariya/notchy-feedback/"
+  url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip"
   name "Notchy"
   desc "Free Dynamic Island for the MacBook notch"
   homepage "https://notchy.dev/"
@@ -14,7 +13,7 @@ cask "notchy" do
   end
 
   auto_updates true
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "Notchy.app"
 
