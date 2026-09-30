@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Verify release download URL
+        run: python3 -m unittest discover -s tests -v
+
       - name: Parse latest version from appcast
         id: parse
         run: |
@@ -50,7 +53,8 @@ jobs:
         run: |
           set -euo pipefail
           VERSION="${{ steps.parse.outputs.latest }}"
-          URL="https://notchy.dev/Notchy-${VERSION}.zip"
+          # Hash the same immutable release asset that the cask installs.
+          URL="https://github.com/vishvavariya/notchy-feedback/releases/download/v${VERSION}/Notchy-${VERSION}.zip"
 
           curl -fsSL "$URL" -o "notchy.zip"
           SHA=$(shasum -a 256 notchy.zip | awk '{print $1}')
