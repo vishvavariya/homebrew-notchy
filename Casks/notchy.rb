@@ -1,9 +1,8 @@
 cask "notchy" do
-  version "1.0.192"
-  sha256 "a0836886d88827f473295861bf2d5129de848afda130ed23514830af42327f5d"
+  version "1.0.193"
+  sha256 "28c79e5d0c59d15af94dd0f94a5f524bfea646c47ba03d23f4a1464f863a27d1"
 
-  url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip",
-      verified: "github.com/vishvavariya/notchy-feedback/"
+  url "https://github.com/vishvavariya/notchy-feedback/releases/download/v#{version}/Notchy-#{version}.zip"
   name "Notchy"
   desc "Free Dynamic Island for the MacBook notch"
   homepage "https://notchy.dev/"
@@ -14,7 +13,7 @@ cask "notchy" do
   end
 
   auto_updates true
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "Notchy.app"
 
@@ -22,9 +21,9 @@ cask "notchy" do
   # Booting the daemon out makes it restore normal charging before it exits.
   uninstall launchctl: "dev.notchy.charge-helper",
             delete:    [
+              "/Library/Application Support/Notchy/ChargeControl",
               "/Library/LaunchDaemons/dev.notchy.charge-helper.plist",
               "/Library/PrivilegedHelperTools/dev.notchy.charge-helper",
-              "/Library/Application Support/Notchy/ChargeControl",
             ]
 
   # Keep in sync with UninstallManager.swift — the in-app "Uninstall Notchy"
@@ -32,20 +31,20 @@ cask "notchy" do
   # (The one thing brew cannot do is `tccutil reset`; permission records for a
   # removed app are inert, and reinstalling re-prompts.)
   zap trash: [
-    "~/Library/Application Support/Notchy",
+    "/Users/Shared/Notchy",
     "~/Library/Application Support/dev.notchy.app",
+    "~/Library/Application Support/Notchy",
     "~/Library/Caches/dev.notchy.app",
     "~/Library/Caches/dev.notchy.app.sparkle",
     "~/Library/Caches/dev.notchy.usagecore",
     "~/Library/Containers/dev.notchy.app",
-    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.usagecore",
     "~/Library/Group Containers/group.dev.notchy.usagecore",
+    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.usagecore",
     "~/Library/HTTPStorages/dev.notchy.app",
     "~/Library/HTTPStorages/dev.notchy.app.binarycookies",
     "~/Library/Preferences/dev.notchy.app.plist",
     "~/Library/Preferences/dev.notchy.usagecore.plist",
     "~/Library/Saved Application State/dev.notchy.app.savedState",
     "~/Library/WebKit/dev.notchy.app",
-    "/Users/Shared/Notchy",
   ]
 end
