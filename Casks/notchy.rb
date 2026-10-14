@@ -30,21 +30,24 @@ cask "notchy" do
   # button and `brew uninstall --zap notchy` must leave the same machine behind.
   # (The one thing brew cannot do is `tccutil reset`; permission records for a
   # removed app are inert, and reinstalling re-prompts.)
-  zap trash: [
-    "/Users/Shared/Notchy",
-    "~/Library/Application Support/dev.notchy.app",
-    "~/Library/Application Support/Notchy",
-    "~/Library/Caches/dev.notchy.app",
-    "~/Library/Caches/dev.notchy.app.sparkle",
-    "~/Library/Caches/dev.notchy.usagecore",
-    "~/Library/Containers/dev.notchy.app",
-    "~/Library/Group Containers/group.dev.notchy.usagecore",
-    "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.usagecore",
-    "~/Library/HTTPStorages/dev.notchy.app",
-    "~/Library/HTTPStorages/dev.notchy.app.binarycookies",
-    "~/Library/Preferences/dev.notchy.app.plist",
-    "~/Library/Preferences/dev.notchy.usagecore.plist",
-    "~/Library/Saved Application State/dev.notchy.app.savedState",
-    "~/Library/WebKit/dev.notchy.app",
-  ]
+  # The sudoers rule is Caffeine's "Stay Awake With the Lid Closed": it lets
+  # one account run `pmset -a disablesleep 0|1` without a password, nothing else.
+  zap delete: "/etc/sudoers.d/notchy-lid-awake-*",
+      trash:  [
+        "/Users/Shared/Notchy",
+        "~/Library/Application Support/dev.notchy.app",
+        "~/Library/Application Support/Notchy",
+        "~/Library/Caches/dev.notchy.app",
+        "~/Library/Caches/dev.notchy.app.sparkle",
+        "~/Library/Caches/dev.notchy.usagecore",
+        "~/Library/Containers/dev.notchy.app",
+        "~/Library/Group Containers/group.dev.notchy.usagecore",
+        "~/Library/Group Containers/PKQWZ2BV83.dev.notchy.usagecore",
+        "~/Library/HTTPStorages/dev.notchy.app",
+        "~/Library/HTTPStorages/dev.notchy.app.binarycookies",
+        "~/Library/Preferences/dev.notchy.app.plist",
+        "~/Library/Preferences/dev.notchy.usagecore.plist",
+        "~/Library/Saved Application State/dev.notchy.app.savedState",
+        "~/Library/WebKit/dev.notchy.app",
+      ]
 end
