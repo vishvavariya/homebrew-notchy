@@ -1,6 +1,6 @@
 # homebrew-notchy
 
-Personal Homebrew tap for [Notchy](https://notchy.dev) — the free, native macOS app that turns your MacBook notch into a Dynamic Island.
+Personal Homebrew tap for [Notchy](https://notchy.dev) — the native macOS app that turns your MacBook notch into a Dynamic Island.
 
 ## Install
 
